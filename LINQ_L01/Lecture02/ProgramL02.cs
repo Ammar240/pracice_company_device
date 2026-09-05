@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LINQ_L01.Lecture02
+namespace LINQ_L01.Lecture02;
+
+internal class ProgramL02
 {
-    internal class ProgramL02
+    static void Main(string[] args)
     {
+        
     }
 }
