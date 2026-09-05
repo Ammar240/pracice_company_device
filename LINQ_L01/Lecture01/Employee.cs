@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LINQ_L01;
+namespace LINQ_L01.Lecture01;
 
 internal class Employee
 {
