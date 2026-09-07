@@ -18,4 +18,11 @@ public static class Extesions2
             }
         }
     }
+    public static IEnumerable<TResult> Chooser<TSourse, TResult>(this IEnumerable<TSourse> source, Func<TSourse,TResult> chooser)
+    {
+        foreach (var item in source)
+        {
+            yield return chooser(item);
+        }
+    }
 }
