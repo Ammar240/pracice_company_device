@@ -1,6 +1,8 @@
 ﻿using EFCorePractice.Contexts;
 using EFCorePractice.Entities;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+
 
 namespace EFCorePractice;
 
@@ -21,28 +23,72 @@ internal class Program
         Employee e03 = new Employee() { Name = "Mahmoud", Age = 40, Salary = 55000, Email = "mahmoud@gmail.com" };
         Employee e04 = new Employee() { Name = "hamada", Age = 30, Salary = 15000, Email = "hamada@gmail.com" };
 
-        Console.WriteLine(context.Entry(e01).State);// Deattached
+        #region Insert
 
-        // 4 wayes to add row in a table
-        // added to local program not database
-        context.Employees.Add(e01);
+        //Console.WriteLine(context.Entry(e01).State);// Deattached
 
-        context.Set<Employee>().Add(e02);
+        //// 4 wayes to add row in a table
+        //// added to local program not database
+        //context.Employees.Add(e01);
 
-        context.Add(e03); // syntax sugar
+        //context.Set<Employee>().Add(e02);
 
-        context.Entry(e04).State = EntityState.Added;
+        //context.Add(e03); // syntax sugar
 
-        Console.WriteLine(context.Entry(e01).State);//added
+        //context.Entry(e04).State = EntityState.Added;
 
-        // Add to database
+        //Console.WriteLine(context.Entry(e01).State);//added
+
+        //// Add to database
+        //context.SaveChanges();
+        //Console.WriteLine(context.Entry(e01).State);// Unchanged
+
+        //Console.WriteLine(e01.EmpId);
+        //Console.WriteLine(e02.EmpId);
+        //Console.WriteLine(e03.EmpId);
+        //Console.WriteLine(e04.EmpId); 
+        #endregion
+
+        #region Select
+
+        var query = (from E in context.Employees
+                     where E.EmpId == 1 || E.EmpId == 2
+                     select E);
+        foreach (var e in query)
+        {
+            Console.WriteLine(e.Name);
+        }
+
+
+        #endregion
+
+        #region Update
+
+        var query2 = (from E in context.Employees
+        where E.EmpId == 1 || E.EmpId == 2
+                      select E).FirstOrDefault();
+
+        Console.WriteLine(query2?.Name ?? "not found");
+
+        Console.WriteLine(context.Entry(query2).State);// unchanged
+        query2.Name = "Ammar Emad";
+        Console.WriteLine(context.Entry(query2).State); // modified (in local)
+
+        // update in database
         context.SaveChanges();
-        Console.WriteLine(context.Entry(e01).State);// Deattached
+        Console.WriteLine(context.Entry(query2).State);// unchanged
 
-        Console.WriteLine(e01.EmpId);
-        Console.WriteLine(e02.EmpId);
-        Console.WriteLine(e03.EmpId);
-        Console.WriteLine(e04.EmpId);
+        #endregion
+
+        #region Delete
+
+        context.Remove(query2);
+        Console.WriteLine(context.Entry(query2).State);// deleted (local)
+
+        context.SaveChanges();
+        Console.WriteLine(context.Entry(query2).State);// Deattached
+
+        #endregion
 
         // using statement is converted to the following code
         //try
