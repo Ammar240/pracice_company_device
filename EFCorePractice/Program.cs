@@ -46,47 +46,49 @@ internal class Program
         //Console.WriteLine(e01.EmpId);
         //Console.WriteLine(e02.EmpId);
         //Console.WriteLine(e03.EmpId);
-        //Console.WriteLine(e04.EmpId); 
+        //Console.WriteLine(e04.EmpId);
         #endregion
 
         #region Select
 
-        var query = (from E in context.Employees
-                     where E.EmpId == 1 || E.EmpId == 2
-                     select E);
-        foreach (var e in query)
-        {
-            Console.WriteLine(e.Name);
-        }
+        //var query = (from E in context.Employees
+        //             where E.EmpId == 3 || E.EmpId == 5
+        //             select E);
+        //foreach (var e in query)
+        //{
+        //    Console.WriteLine(e.Name);
+        //}
 
 
         #endregion
 
         #region Update
 
-        var query2 = (from E in context.Employees
-        where E.EmpId == 1 || E.EmpId == 2
-                      select E).FirstOrDefault();
+        //var query2 = (from E in context.Employees
+        //              where  E.EmpId >= 5
+        //              select E).FirstOrDefault();
 
-        Console.WriteLine(query2?.Name ?? "not found");
+        //Console.WriteLine(query2?.Name ?? "not found");
 
-        Console.WriteLine(context.Entry(query2).State);// unchanged
-        query2.Name = "Ammar Emad";
-        Console.WriteLine(context.Entry(query2).State); // modified (in local)
+        //Console.WriteLine(context.Entry(query2).State);// unchanged
+        //query2.Name = "Ammar Emad";
+        //Console.WriteLine(context.Entry(query2).State); // modified (in local)
 
-        // update in database
-        context.SaveChanges();
-        Console.WriteLine(context.Entry(query2).State);// unchanged
+        //// update in database
+        //context.SaveChanges();
+        //Console.WriteLine(context.Entry(query2).State);// unchanged
 
         #endregion
 
         #region Delete
 
-        context.Remove(query2);
-        Console.WriteLine(context.Entry(query2).State);// deleted (local)
 
-        context.SaveChanges();
-        Console.WriteLine(context.Entry(query2).State);// Deattached
+        //context.Remove(query2);
+        //Console.WriteLine(context.Entry(query2).State);// deleted (local)
+
+
+        //context.SaveChanges();
+        //Console.WriteLine(context.Entry(query2).State);// Deattached
 
         #endregion
 

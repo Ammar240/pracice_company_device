@@ -4,6 +4,7 @@ using EFCorePractice.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EFCorePractice.Migrations
 {
     [DbContext(typeof(EnterpriseContext))]
-    partial class EnterpriseContextModelSnapshot : ModelSnapshot
+    [Migration("20260908074838_OneToManyRelationshipByConvension")]
+    partial class OneToManyRelationshipByConvension
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,23 +27,28 @@ namespace EFCorePractice.Migrations
 
             modelBuilder.Entity("EFCorePractice.Entities.Department", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("DeptId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DeptId"));
 
                     b.Property<DateTime>("DateOfCreation")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("DateTime")
+                        .HasDefaultValue(new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar");
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar")
+                        .HasDefaultValue("Dept")
+                        .HasColumnName("Dept_Name");
 
-                    b.HasKey("Id");
+                    b.HasKey("DeptId");
 
-                    b.ToTable("Departments");
+                    b.ToTable("Departments", (string)null);
                 });
 
             modelBuilder.Entity("EFCorePractice.Entities.Employee", b =>
@@ -54,7 +62,7 @@ namespace EFCorePractice.Migrations
                     b.Property<int>("Age")
                         .HasColumnType("int");
 
-                    b.Property<int>("DepartmentIdId")
+                    b.Property<int>("DepartmentDeptId")
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
@@ -71,25 +79,25 @@ namespace EFCorePractice.Migrations
 
                     b.HasKey("EmpId");
 
-                    b.HasIndex("DepartmentIdId");
+                    b.HasIndex("DepartmentDeptId");
 
                     b.ToTable("Employees");
                 });
 
             modelBuilder.Entity("EFCorePractice.Entities.Employee", b =>
                 {
-                    b.HasOne("EFCorePractice.Entities.Department", "DepartmentId")
-                        .WithMany("Employees")
-                        .HasForeignKey("DepartmentIdId")
+                    b.HasOne("EFCorePractice.Entities.Department", "Department")
+                        .WithMany("Employee")
+                        .HasForeignKey("DepartmentDeptId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("DepartmentId");
+                    b.Navigation("Department");
                 });
 
             modelBuilder.Entity("EFCorePractice.Entities.Department", b =>
                 {
-                    b.Navigation("Employees");
+                    b.Navigation("Employee");
                 });
 #pragma warning restore 612, 618
         }

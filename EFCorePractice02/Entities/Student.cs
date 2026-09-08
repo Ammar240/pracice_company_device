@@ -1,0 +1,20 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace EFCorePractice02.Entities;
+
+internal class Student
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public int? Age { get; set; }
+
+    public ICollection<Course> Courses { get; set; } = new HashSet<Course>();
+
+    //Many to Many with extra properties [Grade]
+    public ICollection<CourseStudent> StudentCourses { get; set; } = new HashSet<CourseStudent>();
+
+}
