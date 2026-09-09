@@ -26,10 +26,10 @@ internal class Program
             Address = "Cairo"
         };
 
-        //Add
-        db.FullTimeEmployees.Add(E01);
-        db.PartTimeEmployees.Add(E02);
+        ////Add
+        //db.FullTimeEmployees.Add(E01);
+        //db.PartTimeEmployees.Add(E02);
 
-        db.SaveChanges();
+        //db.SaveChanges();
     }
 }
