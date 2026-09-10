@@ -13,7 +13,7 @@ namespace ASPNETCore
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            CreateHostBuilder(args).Build().Run(); // Runs Kestrel (called by clr at run time) (console app)
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

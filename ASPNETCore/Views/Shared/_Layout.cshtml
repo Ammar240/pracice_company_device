@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" />
+
+</head>
+<body>
+    @*Start header*@
+    <nav class="mt-5">
+        <center>
+            @* 1.HTML Tag *@
+            @* <a href="/Home/Index" class="btn btn-primary">Home</a> *@
+
+            @* 2.HTML Helper (dynamic)*@
+            @* @Html.ActionLink("Home", "Index", "Home", null, new { @class = "btn btn-primary" }) *@
+
+            @* 3.Tag Helper (best)*@
+            <a asp-controller="Home" asp-action="Index" class="btn btn-primary">Home</a>
+
+            <a href="/Home/AboutUs" class="btn btn-danger">About Us</a>
+            <a href="/Home/Privacy" class="btn btn-success">Privacy</a>
+            <a href="/Home/ContactUs" class="btn btn-info">Contact Us</a>
+
+            <a href="/Account/Login" class="btn btn-danger">Login</a>
+            <a href="/Account/Register" class="btn btn-info">Register</a>
+
+        </center>
+    </nav>
+    @*End header*@
+
+
+    <div>
+        @RenderBody()
+    </div>
+
+    @*Start footer*@
+    <center>
+        <p class="mt-4">Copy right &copy; Ammar Emad @DateTime.Now</p>
+    </center>
+    @*End footer*@
+
+
+</body>
+</html>

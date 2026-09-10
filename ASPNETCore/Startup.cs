@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing.Constraints;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
@@ -16,6 +17,11 @@ namespace ASPNETCore
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllersWithViews(); //MVC
+
+            //services.AddRazorPages(); //Razor pages
+            //services.AddControllers(); // API
+            //services.AddMvc(); // The above three
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -25,6 +31,8 @@ namespace ASPNETCore
             {
                 app.UseDeveloperExceptionPage();
             }
+            
+            app.UseStaticFiles();
 
             app.UseRouting();
 
@@ -32,8 +40,15 @@ namespace ASPNETCore
             {
                 endpoints.MapGet("/", async context =>
                 {
-                    await context.Response.WriteAsync("Hello World!");
+                    context.Response.Redirect("/Home/Index");
                 });
+
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Movies}/{action=Index}/{id:int?}"
+                    //defaults: new { action = "Index" },
+                    //constraints: new { id = new IntRouteConstraint() }
+                 );
             });
         }
     }
